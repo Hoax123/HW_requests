@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+
+.container {
+    min-height: 100vh;
+    padding: 100px 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    text-align: center;
+    color: #fff;
+}
+
+
+.formElements {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+
+.input {
+    flex: 1;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 25px;
+    transition: all 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    background: #222;
+    border-color: #444;
+}
+
+
+.button {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.2rem;
+    background: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 25px;
+}
+
+.button:hover {
+    background: #444;
+}
+
+.button:disabled {
+    background: #131313;
+}
+
+
+.loading {
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+
+.todoList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+
+.todoItem {
+    background: #111;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+    border-left: 3px solid #333;
+    border-radius: 15px;
+}
+
+.todoItem:hover {
+    background: #222;
+    border-left-color: #555;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.todoItem {
+    animation: fadeIn 0.3s ease-out;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        padding: 100px 2rem 3rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 100px 1.5rem 2rem;
+    }
+}
+
+.todoItem {
+    position: relative;
+    padding-right: 180px;
+}
+
+.actions {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+
+
+.updateButton,
+.deleteButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.updateButton {
+    background: #333;
+    color: #fff;
+}
+
+.deleteButton {
+    background: #ff3b30;
+    color: #fff;
+}
+
+.updateButton:hover {
+    background: #444;
+}
+
+.deleteButton:hover {
+    background: #ff5e55;
+}
+
+@media (max-width: 768px) {
+    .todoItem {
+        padding-right: 150px;
+    }
+
+    .updateButton,
+    .deleteButton {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .todoItem {
+        padding-right: 120px;
+    }
+
+    .actions {
+        right: 0.8rem;
+    }
+
+    .updateButton,
+    .deleteButton {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+.searchContainer {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 100px;
+}
+
+.searchInput {
+    flex: 1;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 25px;
+    transition: all 0.2s;
+}
+
+.searchInput:focus {
+    outline: none;
+    background: #222;
+    border-color: #444;
+}
+
+.searchButton {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.searchButton:hover {
+    background: #444;
+}
+
+.filterButton {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.2rem;
+    background: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 25px;
+}
+
+.filterButton:hover {
+    background: #444;
+}
