@@ -1,0 +1,169 @@
+/* TaskPage.module.css */
+
+.taskContainer {
+    min-height: 100vh;
+    padding: 100px 4rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.taskHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.taskTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+    word-break: break-word;
+}
+
+.backButton {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.backButton:hover {
+    background: #444;
+}
+
+.backButton svg {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.taskContent {
+    background: #111;
+    padding: 2.5rem;
+    border-radius: 15px;
+    border-left: 3px solid #333;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.taskText {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.taskMeta {
+    display: flex;
+    gap: 1rem;
+    color: #666;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #333;
+}
+
+.taskActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.taskButton {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 25px;
+    font-weight: 500;
+}
+
+.editButton {
+    background: #333;
+    color: #fff;
+}
+
+.deleteButton {
+    background: #ff3b30;
+    color: #fff;
+}
+
+.editButton:hover {
+    background: #444;
+}
+
+.deleteButton:hover {
+    background: #ff5e55;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .taskContainer {
+        padding: 80px 2rem 3rem;
+    }
+
+    .taskTitle {
+        font-size: 2rem;
+    }
+
+    .taskContent {
+        padding: 2rem;
+    }
+
+    .taskText {
+        font-size: 1.2rem;
+    }
+
+    .taskActions {
+        flex-direction: column;
+    }
+
+    .taskButton {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .taskContainer {
+        padding: 80px 1.5rem 2rem;
+    }
+
+    .taskHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .taskContent {
+        padding: 1.5rem;
+    }
+
+    .taskMeta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+.loading {
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
