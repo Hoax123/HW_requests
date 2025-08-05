@@ -11,7 +11,7 @@ export function MainPage() {
         addToDo} = useToDos()
 
     const [newToDoText, setNewToDoText] = useState('')
-    const [SearchInputValue, setSearchInputValue] = useState('')
+    const [searchInputValue, setSearchInputValue] = useState('')
     const [isSorted, setIsSorted] = useState(false)
 
     function toggleSort() {
@@ -67,7 +67,7 @@ export function MainPage() {
                     <input type="text"
                            className={styles.searchInput}
                            placeholder='Search ToDos...'
-                           value={SearchInputValue}
+                           value={searchInputValue}
                            onChange={handleSearchToDoByPhrase} />
                     <button className={styles.button} onClick={toggleSort}>{isSorted ? 'Disable sort' : 'Enable sort'}</button>
                 </div>
