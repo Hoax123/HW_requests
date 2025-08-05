@@ -1,57 +1,56 @@
 import {useParams, Link, Navigate, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import styles from '../styles/TaskPage.module.css'
+import {useToDos} from "../context/context.jsx";
 
 export function TaskPage(props){
+    const {
+        todos, deleteToDo, editToDo
+    } = useToDos()
+
     let [taskText, setTaskText] = useState("");
     let [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    let params = useParams();
-    let taskId = params.id;
+    let {id} = useParams();
 
     useEffect(()=>{
         setIsLoading(true);
 
-        fetch(`http://localhost:3001/todos/${taskId}`)
+        fetch(`http://localhost:3001/todos/${id}`)
             .then(res => res.json())
             .then(task=>{
                 setTaskText(task.title);
             })
             .finally(() => setIsLoading(false));
-    }, [taskId])
+    }, [id])
 
-    function handleEdit() {
+    async function handleEdit() {
         setIsLoading(true);
+        let newToDoTitle = prompt('Enter a new title', taskText);
 
-        let newToDoTitle = prompt('Enter a new title', taskText)
-
-        if (newToDoTitle) {
-            fetch(`http://localhost:3001/todos/${taskId}`, {
-                method: 'PATCH',
-                headers: {'content-type': 'application/json; charset=UTF-8'},
-                body: JSON.stringify({
-                    title: newToDoTitle
-                })
-            })
-                .then(res => res.json())
-                .then(updatedToDO => {
-                    setTaskText(newToDoTitle)
-                })
-                .catch(error => console.log(error))
-                .finally(() => setIsLoading(false));
+        if (newToDoTitle !== null) {
+            try {
+                const updatedTodo = await editToDo(id, newToDoTitle);
+                setTaskText(updatedTodo.title);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsLoading(false);
+            }
+        } else {
+            setIsLoading(false);
         }
     }
 
     function handleDelete() {
-        fetch(`http://localhost:3001/todos/${taskId}`, {
-            method: 'DELETE',
-        })
-            .then(() => {
-                navigate('/')
-            })
-            .catch(error => console.log(error))
+        try {
+            deleteToDo(id)
+            navigate('/')
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     if (isLoading) {
@@ -71,7 +70,7 @@ export function TaskPage(props){
                 <p className={styles.taskText}>{taskText}</p>
 
                 <div className={styles.taskMeta}>
-                    <span>ID: {taskId}</span>
+                    <span>ID: {id}</span>
                 </div>
             </div>
 

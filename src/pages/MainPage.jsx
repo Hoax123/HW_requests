@@ -1,13 +1,17 @@
-import {use, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import styles from '../styles/app.module.css'
+import {useToDos} from "../context/context.jsx";
 
 export function MainPage() {
-    const [todos, setTodos] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+    const {todos,
+        setTodos,
+        originalToDos,
+        isLoading,
+        addToDo} = useToDos()
+
     const [newToDoText, setNewToDoText] = useState('')
     const [SearchInputValue, setSearchInputValue] = useState('')
-    const [originalToDos, setOriginalToDos] = useState([])
     const [isSorted, setIsSorted] = useState(false)
 
     function toggleSort() {
@@ -24,37 +28,10 @@ export function MainPage() {
         setSearchInputValue('')
     }
 
-    useEffect(() => {
-        fetch('http://localhost:3001/todos')
-            .then(res => res.json())
-            .then(data => {
-                setTodos(data)
-                setOriginalToDos(data)})
-            .catch(error => console.log(error))
-            .finally(() => setIsLoading(false))
-    }, [])
-
-
     function requestAddToDo(e) {
         e.preventDefault()
-        if(!newToDoText.trim()) return
-        setIsLoading(true)
-
-        fetch('http://localhost:3001/todos', {
-            method: 'POST',
-            headers: {'content-type': 'application/json; charset=UTF-8'},
-            body: JSON.stringify({
-                title: newToDoText
-            })
-        })
-            .then(res => res.json())
-            .then(data => {
-                setTodos([...todos, data])
-                setOriginalToDos([...originalToDos, data])
-                setNewToDoText('')
-            })
-            .catch(error => console.log(error))
-            .finally(() => setIsLoading(false))
+        addToDo(newToDoText)
+        setNewToDoText('')
     }
 
     function handleSearchToDoByPhrase(e) {
