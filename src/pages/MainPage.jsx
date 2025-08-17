@@ -2,56 +2,37 @@ import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import styles from '../styles/app.module.css'
 import {useToDos} from "../context/context.jsx";
+import {fetchTodos, addTodo, setSearchTerm, toggleSort, resetTodos} from "../redux/actions/todoActions.jsx";
+import {useDispatch, useSelector} from "react-redux";
 
 export function MainPage() {
-    const {todos,
-        setTodos,
-        originalToDos,
-        isLoading,
-        addToDo} = useToDos()
-
+    const dispatch = useDispatch();
+    const {todos, isSorted, searchTerm} = useSelector(state => state.todos)
+    const {isLoading, error } = useSelector(state => state.ui)
     const [newToDoText, setNewToDoText] = useState('')
-    const [searchInputValue, setSearchInputValue] = useState('')
-    const [isSorted, setIsSorted] = useState(false)
 
-    function toggleSort() {
-        let nextSortState = !isSorted
-        setIsSorted(nextSortState)
+    useEffect(() => {
+        dispatch(fetchTodos())
+    }, [dispatch])
 
-        if (nextSortState) {
-            let sorted = [...todos].sort((a,b) => a.title.localeCompare(b.title))
-            setTodos(sorted)
-        } else {
-            setTodos(originalToDos)
-        }
-
-        setSearchInputValue('')
-    }
-
-    function requestAddToDo(e) {
+    function handleAddToDO(e) {
         e.preventDefault()
-        addToDo(newToDoText)
-        setNewToDoText('')
+        dispatch(addTodo(newToDoText))
+            .then(() => setNewToDoText(''))
+            .catch(err => console.error(err))
     }
 
     function handleSearchToDoByPhrase(e) {
-        let phrase = e.target.value
-        setSearchInputValue(phrase)
-        if (phrase === '') {
-            setTodos(originalToDos)
-        } else {
-            let filteredToDos = originalToDos.filter(todo => todo.title.toLowerCase().includes(phrase.toLowerCase()))
-            setTodos(filteredToDos)
-        }
-
-        setIsSorted(false)
+        dispatch(setSearchTerm(e.target.value))
     }
 
-
+    function handleToggleSort() {
+        dispatch(toggleSort())
+    }
 
     return (
         <div className={styles.container}>
-            <form action="" className={styles.form} onSubmit={requestAddToDo}>
+            <form action="" className={styles.form} onSubmit={handleAddToDO}>
                 <h1 className={styles.title}>ToDo List</h1>
 
                 <div className={styles.formElements}>
@@ -67,9 +48,9 @@ export function MainPage() {
                     <input type="text"
                            className={styles.searchInput}
                            placeholder='Search ToDos...'
-                           value={searchInputValue}
+                           value={searchTerm}
                            onChange={handleSearchToDoByPhrase} />
-                    <button className={styles.button} onClick={toggleSort}>{isSorted ? 'Disable sort' : 'Enable sort'}</button>
+                    <button className={styles.button} onClick={handleToggleSort}>{isSorted ? 'Disable sort' : 'Enable sort'}</button>
                 </div>
 
                 {isLoading ? (<p className={styles.loading}>Loading data...</p>) :
